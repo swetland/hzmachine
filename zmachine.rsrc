@@ -1,0 +1,153 @@
+# -*- coding: utf-8 -*-
+
+package "net.frotz.zruntime"
+
+interface "Resources.java"
+events "Events.java"
+
+string ID_APP_NAME "Z Machine"
+string ID_APP_CLASS "net.frotz.zruntime.ZRuntime"
+
+data 1000 1000 "game.dat"
+
+bitmap ID_LARGE_ICON "graphics/icon32.png"
+bitmap ID_SMALL_ICON "graphics/icon16.png"
+bitmap ID_SPLASH_SCREEN "graphics/splash.png"
+
+string ID_LOCALE "en_US"
+
+menu MENU_MAIN
+	menuItem
+		title="View Transcript"
+		event=DO_VIEW_TRANSCRIPT
+		shortcut='t'
+	menuItem
+		title="View Notepad"
+		event=DO_VIEW_NOTEPAD
+		shortcut='n'
+	menuItem
+		title="About ZMachine"
+		event=DO_ABOUT
+endMenu	
+
+menu MENU_TRANSCRIPT
+	menuItem
+		title="View Notepad"
+		event=DO_VIEW_NOTEPAD
+		shortcut='n'
+	menuItem
+		title="Email Transcript"
+		event=DO_EMAIL_TRANSCRIPT
+		shortcut='e'
+	menuItem
+		title="Clear Transcript"
+		event=DO_CLEAR_TRANSCRIPT
+	menuItem
+		title="Return to Game"
+		shortcut='.'
+		event=TRANSCRIPT_DISMISS
+endMenu
+
+menu MENU_NOTEPAD
+	menuItem
+		title="View Transcript"
+		event=DO_VIEW_TRANSCRIPT
+		shortcut='t'
+	menuItem
+		title="Email Notepad"
+		event=DO_EMAIL_NOTEPAD
+		shortcut='e'
+	menuItem
+		title="Return to Game"
+		shortcut='.'
+		event=NOTEPAD_DISMISS
+endMenu
+
+dialog DIALOG_RESTORE 
+		title="Restore Game" centerVertically centerHorizontally
+
+	button title=okButton position=buttonBottom1 
+		event=RESTORE_OK
+
+	button title=cancelButton position=buttonTop1
+		event=RESTORE_CANCEL
+
+	popupMenu alignWithParentTop=4 left=42 fillToRight=3
+		id=ID_NAME_RESTORE
+		initialFocus
+
+	staticText text="Name" font=boldSysFont
+		positionToLeft=ID_NAME_RESTORE:2
+		alignVertical=ID_NAME_RESTORE
+	
+endDialog
+
+dialog DIALOG_SAVE showCancel
+		title="Save Game" centerVertically centerHorizontally
+
+	button title=okButton position=buttonBottom1 
+		event=SAVE_OK
+
+	button title=cancelButton position=buttonTop1
+		event=SAVE_CANCEL
+
+	textField alignWithParentTop=4 left=42 fillToRight=3
+		id=ID_NAME_SAVE
+		justifyLeft
+		maxLength=32
+		initialFocus
+	
+	staticText text="Name" font=boldSysFont
+		positionToLeft=ID_NAME_SAVE:2
+		alignVertical=ID_NAME_SAVE
+endDialog
+
+dialog DIALOG_ABOUT centerVertically centerHorizontally
+		title = "About Z Machine"
+
+	button title=okButton position=buttonBottom1
+		initialFocus
+
+	staticText 
+		alignWithParentTop=2
+		text="Copyright 2001-2003, Brian Swetland"
+		left=3 fillToRight=3
+		id=ID_COPYRIGHT
+		justifyCenter
+
+	staticText
+		positionBelow=ID_COPYRIGHT:2
+		text="Share and Enjoy!"
+		left=2 fillToRight=2
+		justifyCenter
+endDialog
+
+screen SCREEN_NOTEPAD
+	actionMenu=MENU_NOTEPAD
+	title="Game Notepad"
+
+	editText
+		alignWithParentTop=0
+		initialFocus
+		id=ID_TEXT_NOTEPAD
+		left=0 fillToRight=0 fillToBottom=0
+endScreen
+
+screen SCREEN_TRANSCRIPT
+	actionMenu=MENU_TRANSCRIPT
+	title="Game Transcript"
+
+	editText
+		alignWithParentTop=0
+		initialFocus
+		id=ID_TEXT_TRANSCRIPT
+		left=0 fillToRight=0 fillToBottom=0
+endScreen
+
+#alert ALERT_OVERWRITE
+#	title="Overwrite Saved Game?"
+#	text="Are you sure that you want to replace this existing saved game?"
+#
+#	button title=cancelButton position=buttonBottom1
+#	button title=okButton position=buttonBottom2
+#endAlert
